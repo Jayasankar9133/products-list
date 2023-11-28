@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <link rel="icon" href="">
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        .cart-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .heading {
+            color: rgb(80, 70, 3);
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .cart-1 {
+            border: 2px black solid;
+            margin: 10px;
+            padding: 12px;
+            width: 500px;
+        }
+
+        .title {
+            color: rgb(27, 20, 220);
+            font-weight: bold;
+            font-family: serif;
+        }
+
+        .image {
+            width: 100%;
+        }
+
+
+        @media (width<576px) {
+
+            .heading {
+                color: rgb(189, 13, 24);
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .cart-1 {
+                border: 2px rgb(11, 21, 155) solid;
+                margin: 15px;
+            }
+
+            .title {
+                color: rgb(220, 133, 20);
+                font-weight: bold;
+                font-family: serif;
+            }
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="heading">Products Details</h1>
+        <br>
+
+        <div class="cart-container" id="cartContainer">
+
+        </div>
+
+    </div>
+
+</body>
+
+<script type="text/javascript">
+    let cartContainerEl = document.getElementById("cartContainer");
+
+    async function productData() {
+        let result = await fetch("https://fakestoreapi.com/products/");
+        let data = await result.json();
+
+        data.map((product) => {
+            let cartEl = document.createElement("div");
+            cartEl.classList.add("cart-1")
+            cartContainerEl.appendChild(cartEl);
+
+
+            ////title
+
+            let titleEl = document.createElement("h1");
+            titleEl.textContent = product.title;
+            cartEl.appendChild(titleEl);
+            titleEl.classList.add("title");
+
+            ///price
+
+            let priceEl = document.createElement("h2");
+            priceEl.textContent = `$ ${product.price}`;
+            cartEl.appendChild(priceEl);
+
+            ///image
+
+            let imageEl = document.createElement("img");
+            imageEl.src = product.image;
+            cartEl.appendChild(imageEl);
+            imageEl.classList.add("image");
+
+            ////category
+
+            let categoryEl = document.createElement("h3");
+            categoryEl.textContent = product.category;
+            cartEl.appendChild(categoryEl);
+
+
+            /////description
+
+            let descriptionEl = document.createElement("p");
+            descriptionEl.textContent = product.description;
+            cartEl.appendChild(descriptionEl);
+        });
+
+    };
+
+    productData();
+
+
+
+
+</script>
+
+</html>
